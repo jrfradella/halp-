@@ -3,4 +3,4 @@ rate = input('enter your hourly pay')
 
 total = float(hrs)*float(rate)
 
-print: ("Pay:" (total))
+print(f"Pay: ${total})
