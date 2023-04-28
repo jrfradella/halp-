@@ -1,6 +1,6 @@
-hrs = input('Enter Hours')
-rate = input('enter your hourly pay')
+hrs = input("Enter Hours")
+rate = input("enter your hourly pay")
 
-total = float(hrs)*float(rate)
+total = float(hrs) * float(rate)
 
-print: ("Pay:" (total))
+print(f"Pay: ${total}")
