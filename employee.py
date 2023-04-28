@@ -1,6 +1,11 @@
 import datetime
 import random
 
+INFLATION = 0.027
+DATE_FORMAT = "%m/%d/%Y"
+UUID_LENGTH = 25
+SEP = "|"
+
 
 class Employee:
     def __init__(
@@ -13,7 +18,7 @@ class Employee:
         end_date: datetime.datetime = None,
         birth_date: datetime.datetime = None,
     ) -> None:
-        uuid_length = 25
+        uuid_length = UUID_LENGTH
         self.uuid = int(
             "".join([str(random.randint(0, 1)) for i in range(uuid_length)])
         )
@@ -36,9 +41,20 @@ class Employee:
         | OT Rate: ${self.rate*1.5}
         """
 
+    def asDict(self):
+        return {
+            "Employee": self.uuid,
+            "First": self.first,
+            "Middle": self.middle,
+            "Last": self.last,
+            "Start": self.returnDate(self.start_date),
+            "End": self.returnDate(self.end_date),
+            "Hourly": self.rate,
+        }
+
     def returnDate(self, date: datetime.datetime) -> str:
         return (
-            datetime.datetime.strftime(date, "%m/%d/%Y") if date is not None else "N/A"
+            datetime.datetime.strftime(date, DATE_FORMAT) if date is not None else "N/A"
         )
 
     def calculatePay(self, hours_worked: int | float) -> float:
@@ -91,14 +107,20 @@ if __name__ == "__main__":
 
     print(f"{tanner.first} will get paid ${tanner.calculatePay(32)}")
 
-    print(f"inflation sucks, gotta give another raise")
-
-    inflation_rate = 0.027
     for employee in employees:
-        promotion_amount = employee.rate * inflation_rate
+        promotion_amount = employee.rate * INFLATION
         employee.promote(promotion_amount)
 
     tanner.terminate()
     joey.promote(2)
     print(employees)
     tanner.terminate()
+    tanner_dict = tanner.asDict()
+    joey_dict = joey.asDict()
+    employee_dict = {k: [v] for k, v in tanner_dict.items()}
+    [employee_dict[k].append(v) for k, v in joey_dict.items()]
+    for k, v in employee_dict.items():
+        k = k.ljust(10)
+        v1 = str(v[0]).ljust(UUID_LENGTH)
+        v2 = str(v[1]).ljust(UUID_LENGTH)
+        print(k, v1, v2, sep=SEP)
