@@ -50,4 +50,4 @@ if __name__ == "__main__":
         print(f"Average Score: {average_score}")
         for grade in GRADES:
             grade = grade[0]
-            print(f"Qty {grade}: {student.grades.count(grade)}")
+            print(f"Num {grade}: {student.grades.count(grade)}")
