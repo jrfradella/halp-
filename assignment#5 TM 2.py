@@ -14,5 +14,6 @@ while True:
     except:
         print("Invalid input")
 
-print("Maximium is", max(numbers))
-print("Minimium is", min(numbers))
+if len(numbers) > 0:
+    print("Maximium is", max(numbers))
+    print("Minimium is", min(numbers))
